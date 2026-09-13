@@ -1,0 +1,437 @@
+:root {
+    /* Paleta Inspirada em Pierre-Auguste Renoir (Tons Terrosos e Aveludados) */
+    --bg-dark: #121014;           /* Escuro Aveludado com tom ameixa */
+    --bg-sidebar: #1a161d;        /* Sidebar Berinjela/Bordô Escuro */
+    --bg-card: #231d27;           /* Card Terracota Escuro / Cinza Quente */
+    --bg-card-hover: #2d2633;     /* Hover Suave */
+    --border-color: #3d3245;      /* Bordas em tom de sienna queimado */
+    --text-main: #f7edeb;         /* Branco quente (Tom de alabastro) */
+    --text-muted: #bda8ab;        /* Rosa terroso acinzentado */
+    
+    /* Cores de Destaque / Status */
+    --teal: #e07a5f;              /* Terracota Quente (Cor Primária da Interface) */
+    --teal-dark: #c46248;         /* Terracota Escuro */
+    --purple: #9b5de5;            /* Violeta Suave */
+    --purple-light: #c77dff;      /* Lilás Pastel */
+    --yellow: #f4a261;            /* Amarelo Ocre / Âmbar Quente */
+    --red: #e63946;               /* Vermelho Venetiano / Carmin */
+    --blue: #457b9d;              /* Azul Cobalto Suave */
+    --pink: #f72585;              /* Rosa Quente */
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+}
+
+body { 
+    background-color: var(--bg-dark); 
+    color: var(--text-main); 
+    display: flex; 
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+/* Sidebar Navigation */
+aside { 
+    width: 240px; 
+    background-color: var(--bg-sidebar); 
+    border-right: 1px solid var(--border-color); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    padding: 24px 16px; 
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.brand { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    font-size: 20px; 
+    font-weight: 700; 
+    padding: 0 8px 24px 8px; 
+    justify-content: space-between; 
+}
+
+.brand-logo { 
+    background-color: var(--teal); 
+    color: #ffffff; 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 8px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 800; 
+}
+
+.close-menu-btn { 
+    display: none; 
+    background: none; 
+    border: none; 
+    color: var(--text-muted); 
+    cursor: pointer; 
+}
+
+.nav-menu { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 6px; 
+    list-style: none; 
+}
+
+.nav-item { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 12px 14px; 
+    border-radius: 10px; 
+    color: var(--text-muted); 
+    cursor: pointer; 
+    transition: 0.2s; 
+    font-size: 14px; 
+}
+
+.nav-item:hover { 
+    background-color: rgba(224, 122, 95, 0.1); 
+    color: var(--text-main); 
+}
+
+.nav-item.active { 
+    background-color: rgba(224, 122, 95, 0.2); 
+    color: var(--teal); 
+    font-weight: 600; 
+}
+
+.nav-link-content { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+}
+
+/* Área Principal */
+main { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    overflow-y: auto; 
+    padding: 32px 40px; 
+}
+
+header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 28px; 
+}
+
+.header-left { 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+}
+
+.mobile-menu-btn { 
+    display: none; 
+    background: none; 
+    border: none; 
+    color: var(--text-main); 
+    cursor: pointer; 
+}
+
+.header-title h1 { 
+    font-size: 24px; 
+    font-weight: 700; 
+}
+
+.header-title p { 
+    font-size: 13px; 
+    color: var(--text-muted); 
+}
+
+/* Componentes */
+.card { 
+    background-color: var(--bg-card); 
+    border: 1px solid var(--border-color); 
+    border-radius: 14px; 
+    padding: 20px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary { 
+    background-color: var(--teal); 
+    color: #ffffff; 
+    border: none; 
+    padding: 10px 18px; 
+    border-radius: 8px; 
+    font-weight: 600; 
+    font-size: 13px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover { 
+    background-color: var(--teal-dark); 
+}
+
+.btn-secondary { 
+    background: transparent; 
+    border: 1px solid var(--border-color); 
+    color: var(--text-main); 
+    padding: 10px 18px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+
+.metrics-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 16px; 
+    margin-bottom: 20px; 
+}
+
+.metric-title { 
+    font-size: 12px; 
+    color: var(--text-muted); 
+    text-transform: uppercase; 
+    margin-bottom: 8px; 
+}
+
+.metric-value { 
+    font-size: 22px; 
+    font-weight: 700; 
+}
+
+.view-section { 
+    display: none; 
+    animation: fadeIn 0.2s ease; 
+}
+
+.view-section.active { 
+    display: block; 
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; } 
+    to { opacity: 1; } 
+}
+
+/* Tabela */
+.table-container { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+}
+
+.data-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+    font-size: 13px; 
+    white-space: nowrap; 
+}
+
+.data-table th { 
+    padding: 12px 16px; 
+    color: var(--text-muted); 
+    font-size: 11px; 
+    border-bottom: 1px solid var(--border-color); 
+}
+
+.data-table td { 
+    padding: 14px 16px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04); 
+}
+
+.badge-status { 
+    padding: 4px 10px; 
+    border-radius: 6px; 
+    font-size: 12px; 
+    font-weight: 600; 
+    cursor: pointer; 
+}
+
+.badge-pago { 
+    background-color: rgba(224, 122, 95, 0.2); 
+    color: var(--teal); 
+}
+
+.badge-pendente { 
+    background-color: rgba(244, 162, 97, 0.2); 
+    color: var(--yellow); 
+}
+
+.action-btn-danger { 
+    color: var(--red); 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-weight: 600; 
+}
+
+/* Grids e Cartões Bancários */
+.categories-grid, .cards-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px; 
+}
+
+.credit-card { 
+    border-radius: 16px; 
+    padding: 20px; 
+    color: white; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    height: 160px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Cartão Nubank (Roxo Oficial) */
+.card-nubank { 
+    background: linear-gradient(135deg, #820ad1, #4c0677); 
+}
+
+/* Cartão Itaú (Laranja Oficial) */
+.card-itau { 
+    background: linear-gradient(135deg, #ec7000, #b24900); 
+}
+
+/* Menu Mobile Overlay */
+.sidebar-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background: rgba(0,0,0,0.7); 
+    display: none; 
+    z-index: 90; 
+}
+
+.sidebar-overlay.active { 
+    display: block; 
+}
+
+/* Modal */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background: rgba(0,0,0,0.7); 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 200; 
+    padding: 16px; 
+}
+
+.modal-overlay.active { 
+    display: flex; 
+}
+
+.modal { 
+    background: var(--bg-card); 
+    padding: 24px; 
+    border-radius: 14px; 
+    width: 100%; 
+    max-width: 400px; 
+    border: 1px solid var(--border-color); 
+}
+
+.modal h3 { 
+    margin-bottom: 16px; 
+}
+
+.form-group { 
+    margin-bottom: 14px; 
+}
+
+.form-group label { 
+    display: block; 
+    font-size: 12px; 
+    color: var(--text-muted); 
+    margin-bottom: 4px; 
+}
+
+.form-group input, .form-group select { 
+    width: 100%; 
+    padding: 8px 12px; 
+    background: var(--bg-dark); 
+    border: 1px solid var(--border-color); 
+    color: white; 
+    border-radius: 6px; 
+}
+
+.modal-actions { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 10px; 
+    margin-top: 20px; 
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+    }
+
+    aside.mobile-active {
+        transform: translateX(0);
+    }
+
+    .close-menu-btn, .mobile-menu-btn {
+        display: block;
+    }
+
+    main {
+        padding: 20px 16px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .categories-grid, .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .header-title h1 {
+        font-size: 18px;
+    }
+
+    .header-title p {
+        font-size: 11px;
+    }
+
+    .btn-text {
+        display: none;
+    }
+
+    .btn-primary {
+        padding: 10px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-grid, .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
