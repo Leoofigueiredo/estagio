@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fynance | Sistema Web de Gestão Financeira</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Estilos adicionais para o indicador de Sistema Web */
+        .system-badge {
+            background: rgba(224, 122, 95, 0.15);
+            color: var(--teal);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(224, 122, 95, 0.3);
+        }
+
+        .web-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .status-dot-active {
+            width: 8px;
+            height: 8px;
+            background-color: #2ec4b6;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #2ec4b6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay do Menu Mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar">
+        <div>
+            <div class="brand">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="brand-logo">F</div>
+                    <span>Fynance</span>
+                </div>
+                <span class="system-badge">Web App</span>
+                <button class="close-menu-btn" onclick="toggleMobileMenu()">
+                    <i data-lucide="x" size="20"></i>
+                </button>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="switchTab('visao-geral', this)">
+                    <div class="nav-link-content">
+                        <i data-lucide="layout-dashboard" size="18"></i>
+                        <span>Visão Geral</span>
+                    </div>
+                </li>
+                <li class="nav-item" onclick="switchTab('despesas', this)">
+                    <div class="nav-link-content">
+                        <i data-lucide="arrow-up-right" size="18"></i>
+                        <span>Despesas</span>
+                    </div>
+                </li>
+                <li class="nav-item" onclick="switchTab('categorias', this)">
+                    <div class="nav-link-content">
+                        <i data-lucide="grid" size="18"></i>
+                        <span>Categorias</span>
+                    </div>
+                </li>
+                <li class="nav-item" onclick="switchTab('cartoes', this)">
+                    <div class="nav-link-content">
+                        <i data-lucide="credit-card" size="18"></i>
+                        <span>Cartões</span>
+                    </div>
+                </li>
+                <li class="nav-item" onclick="switchTab('perfil', this)">
+                    <div class="nav-link-content">
+                        <i data-lucide="settings" size="18"></i>
+                        <span>Configurações</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <header>
+            <div class="header-left">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" size="24"></i>
+                </button>
+                <div class="header-title">
+                    <h1 id="page-title">Visão Geral</h1>
+                    <p id="page-subtitle">Sistema Web Operacional</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <!-- Indicador de Status do Sistema Web -->
+                <div class="web-status">
+                    <span class="status-dot-active"></span>
+                    <span class="btn-text">Sistema Conectado</span>
+                </div>
+                <button class="btn-primary" onclick="openModal()">
+                    <i data-lucide="plus" size="16"></i> 
+                    <span class="btn-text">Nova Despesa</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 1. VISÃO GERAL -->
+        <section id="visao-geral" class="view-section active">
+            <div class="metrics-grid">
+                <div class="card">
+                    <div class="metric-title">Orçamento Mensal</div>
+                    <div class="metric-value">R$ 5.000,00</div>
+                </div>
+                <div class="card">
+                    <div class="metric-title">Gasto Total</div>
+                    <div class="metric-value" id="dash-total" style="color: var(--teal);">R$ 0,00</div>
+                </div>
+                <div class="card">
+                    <div class="metric-title">Pendente</div>
+                    <div class="metric-value" id="dash-pendente" style="color: var(--yellow);">R$ 0,00</div>
+                </div>
+                <div class="card">
+                    <div class="metric-title">Pago</div>
+                    <div class="metric-value" id="dash-pago" style="color: var(--blue);">R$ 0,00</div>
+                </div>
+            </div>
+
+            <div class="dashboard-split">
+                <div class="card">
+                    <h3 style="font-size: 15px; margin-bottom: 20px;">Lançamentos Recentes</h3>
+                    <div class="recent-list" id="recent-list">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DESPESAS -->
+        <section id="despesas" class="view-section">
+            <div class="card table-container" style="padding: 0;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenses-table-body">
+                        <!-- Renderizado via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. CATEGORIAS -->
+        <section id="categorias" class="view-section">
+            <div class="categories-grid" id="categories-grid">
+                <!-- Renderizado via JS -->
+            </div>
+        </section>
+
+        <!-- 4. CARTÕES -->
+        <section id="cartoes" class="view-section">
+            <div class="cards-grid">
+                <div class="credit-card card-nubank">
+                    <div>
+                        <div class="card-type">CRÉDITO</div>
+                        <div class="card-name">Nubank</div>
+                    </div>
+                    <div>
+                        <div class="card-limit">Status</div>
+                        <div class="card-val">Ativo</div>
+                    </div>
+                </div>
+                <div class="credit-card card-itau">
+                    <div>
+                        <div class="card-type">CRÉDITO</div>
+                        <div class="card-name">Itaú Mastercard</div>
+                    </div>
+                    <div>
+                        <div class="card-limit">Status</div>
+                        <div class="card-val">Ativo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONFIGURAÇÕES DO SISTEMA WEB -->
+        <section id="perfil" class="view-section">
+            <div class="card" style="max-width: 500px;">
+                <h3 style="margin-bottom: 12px;">Informações do Sistema Web</h3>
+                <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 14px;">
+                    Esta é uma aplicação <b>Single Page Application (SPA)</b> desenvolvida em arquitetura Web nativa (HTML5, CSS3 e JavaScript ES6+).
+                </p>
+                <div style="background: var(--bg-dark); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 12px;">
+                    <div><b>Modo de Armazenamento:</b> Client-Side (localStorage)</div>
+                    <div style="margin-top: 4px;"><b>Versão da Aplicação:</b> 1.0.0 Web</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Cadastro de Despesa -->
+    <div class="modal-overlay" id="expense-modal">
+        <div class="modal">
+            <h3>Cadastrar Nova Despesa</h3>
+            <form id="expense-form">
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input type="text" id="desc" placeholder="Ex: Supermercado" required>
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="category">
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Transporte">Transporte</option>
+                        <option value="Moradia">Moradia</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Lazer">Lazer</option>
+                        <option value="Educação">Educação</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Forma de Pagamento</label>
+                    <input type="text" id="payment" placeholder="Ex: Nubank, PIX" required>
+                </div>
+                <div class="form-group">
+                    <label>Valor (R$)</label>
+                    <input type="number" step="0.01" id="amount" placeholder="0.00" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
